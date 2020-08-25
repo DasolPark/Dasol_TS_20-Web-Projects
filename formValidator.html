@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="./css/formValidator.css" />
+  </head>
+  <body>
+    <header>
+      <h1>지금 가입하시고, 혜택을 누리세요!</h1>
+    </header>
+    <main>
+      <form class="form" id="form">
+        <h2>📝가입하기</h2>
+        <div class="form-control">
+          <label for="userId">아이디</label>
+          <input
+            type="text"
+            id="userId"
+            placeholder="아이디을 입력하세요."
+            autocomplete="off"
+          />
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="email">이메일</label>
+          <input
+            type="text"
+            id="email"
+            placeholder="이메일을 입력하세요."
+            autocomplete="off"
+          />
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="password">비밀번호</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="비밀번호를 입력하세요."
+            autocomplete="off"
+          />
+          <small>Error message</small>
+        </div>
+        <div class="form-control">
+          <label for="password2">비밀번호 확인</label>
+          <input
+            type="password"
+            id="password2"
+            placeholder="비밀번호를 확인하세요."
+            autocomplete="off"
+          />
+          <small>Error message</small>
+        </div>
+        <button type="submit">회원 가입 😁</button>
+      </form>
+    </main>
+    <div class="modal-container" id="modal">
+      <div class="modal">
+        <h4>환영합니다! <br />정상적으로 가입되었습니다🎉</h4>
+        <button id="success" class="success-btn">첫 화면으로 돌아가기</button>
+      </div>
+    </div>
+
+    <script src="./dist/formValidator.js"></script>
+  </body>
+</html>
