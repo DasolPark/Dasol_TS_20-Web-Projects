@@ -1,84 +1,79 @@
 const movieSelect = document.getElementById('movies') as HTMLSelectElement;
 const seatsContainer = document.getElementById('seats') as HTMLDivElement;
-const seats = document.querySelectorAll('.seats .seat') as NodeListOf<
-  HTMLDivElement
->;
+const seats = document.querySelectorAll(
+  '.seats .seat:not(.occupied)'
+) as NodeList;
 const count = document.getElementById('count') as HTMLSpanElement;
 const total = document.getElementById('total') as HTMLSpanElement;
 
-let ticketPrice: number = +movieSelect.value;
-let occupiedSeat: number[] = [];
+let ticketPrice = +movieSelect.value;
 
-drawSelectedSeatUI();
-calculateTotalPrice();
+populateUI();
 
-// Calculate total price
-function calculateTotalPrice() {
-  count.innerText = occupiedSeat.length.toString();
-  total.innerText = formatNumber(ticketPrice * occupiedSeat.length);
-}
-
-// Draw selected seat
-function drawSelectedSeatUI() {
-  const selectedSeats = JSON.parse(localStorage.getItem('movieSeat') || '[]');
-  occupiedSeat = selectedSeats;
-
-  if (selectedSeats.length) {
+// Populate UI
+function populateUI() {
+  const selectedSeatsIndex: Array<number> = JSON.parse(
+    localStorage.getItem(`movie${movieSelect.selectedIndex}`) || '[]'
+  );
+  if (selectedSeatsIndex.length) {
     seats.forEach((seat, index) => {
-      if (
-        !seat.classList.contains('occupied') &&
-        selectedSeats.indexOf(index) > -1
-      ) {
-        seat.classList.add('selected');
+      if (selectedSeatsIndex.indexOf(index) > -1) {
+        (seat as HTMLDivElement).classList.add('selected');
+      } else {
+        (seat as HTMLDivElement).classList.remove('selected');
       }
     });
   } else {
-    seats.forEach((seat) => seat.classList.remove('selected'));
+    seats.forEach((seat) =>
+      (seat as HTMLDivElement).classList.remove('selected')
+    );
   }
+
+  updateSelectedSeat();
 }
 
-// Set local storage
-function setLocalStorage() {
-  localStorage.setItem('movieSeat', JSON.stringify(occupiedSeat));
-}
+// Update selected seat & Set LocalStorage & Count ticket & Calculate total price
+function updateSelectedSeat() {
+  const selectedSeats = document.querySelectorAll(
+    '.seats .seat.selected'
+  ) as NodeList;
 
-// Update current seat state
-function updateSeatsState() {
-  seats.forEach((seat, index) => {
-    if (
-      seat.classList.contains('selected') &&
-      occupiedSeat.indexOf(index) === -1
-    ) {
-      occupiedSeat.push(index);
-    } else if (
-      !seat.classList.contains('selected') &&
-      occupiedSeat.indexOf(index) > -1
-    ) {
-      occupiedSeat = occupiedSeat.filter((idx) => idx !== index);
-    }
-  });
+  const selectedSeatsIndex = [...selectedSeats].map((seat) =>
+    [...seats].indexOf(seat)
+  );
 
-  setLocalStorage();
-}
+  localStorage.setItem(
+    `movie${movieSelect.selectedIndex}`,
+    JSON.stringify(selectedSeatsIndex)
+  );
 
-// Utils
-function formatNumber(num: number) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  const selectedSeatsLength = selectedSeatsIndex.length;
+
+  count.innerText = selectedSeatsLength.toString();
+  total.innerText = formatNumber(selectedSeatsLength * ticketPrice);
 }
 
 // Event listeners
-seatsContainer.addEventListener('click', (e) => {
-  if (
-    (e.target as HTMLDivElement).classList.contains('seat') &&
-    !(e.target as HTMLDivElement).classList.contains('occupied')
-  ) {
-    (e.target as HTMLDivElement).classList.toggle('selected');
-    updateSeatsState();
-  }
-  calculateTotalPrice();
-});
-
 movieSelect.addEventListener('change', (e) => {
   ticketPrice = +(e.target as HTMLOptionElement).value;
-  calculateTotalPrice();
+
+  populateUI();
+  updateSelectedSeat();
 });
+
+seatsContainer.addEventListener('click', (e) => {
+  const targetDiv = e.target as HTMLDivElement;
+  if (
+    targetDiv.classList.contains('seat') &&
+    !targetDiv.classList.contains('occupied')
+  ) {
+    targetDiv.classList.toggle('selected');
+
+    updateSelectedSeat();
+  }
+});
+
+// Util
+function formatNumber(num: number) {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
