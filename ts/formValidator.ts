@@ -14,6 +14,7 @@ enum Field {
   PASSWORD2 = 'Password2',
 }
 
+// check  password validation
 function checkPassword(
   password: HTMLInputElement,
   password2: HTMLInputElement
@@ -40,36 +41,39 @@ function checkPassword(
   return false;
 }
 
+// Check email validation
 function checkEmail(email: HTMLInputElement) {
   const value = email.value.trim();
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   if (!checkRequired(email)) {
     showError(email, `${getFieldName(email)} 입력이 필요합니다.`);
-  } else if (re.test(value)) {
+  } else if (!re.test(value)) {
+    showError(email, '유효한 이메일 형식이 아닙니다.');
+  } else {
     showSuccess(email);
     return true;
-  } else {
-    showError(email, '유효한 이메일 형식이 아닙니다.');
   }
   return false;
 }
 
+// Check user id validation
 function checkUserId(userId: HTMLInputElement) {
   const value = userId.value.trim();
   const re = /^[a-z0-9]{5,12}$/;
 
   if (!checkRequired(userId)) {
     showError(userId, `${getFieldName(userId)} 입력이 필요합니다.`);
-  } else if (re.test(value)) {
+  } else if (!re.test(value)) {
+    showError(userId, '5~12자의 영문 소문자, 숫자만 사용 가능합니다.');
+  } else {
     showSuccess(userId);
     return true;
-  } else {
-    showError(userId, '5~12자의 영문 소문자, 숫자만 사용 가능합니다.');
   }
   return false;
 }
 
+// Translate English to Korean
 function getKrFieldName(enTitle: string) {
   if (enTitle === Field.USERID) {
     return '아이디';
@@ -82,13 +86,24 @@ function getKrFieldName(enTitle: string) {
   }
 }
 
+// Get Korean field name from English field name
 function getFieldName(input: HTMLInputElement) {
   return getKrFieldName(input.id.charAt(0).toUpperCase() + input.id.slice(1));
 }
 
+// Check field required
+function checkRequired(input: HTMLInputElement) {
+  if (input.value.trim() === '') {
+    return false;
+  }
+  return true;
+}
+
+// Show error or success
 function showError(input: HTMLInputElement, message: string) {
   const formControl = input.parentElement as HTMLDivElement;
   formControl.className = 'form-control error';
+
   const small = formControl.querySelector('small') as HTMLElement;
   small.innerText = message;
 }
@@ -98,13 +113,7 @@ function showSuccess(input: HTMLInputElement) {
   formControl.className = 'form-control success';
 }
 
-function checkRequired(input: HTMLInputElement) {
-  if (input.value.trim() === '') {
-    return false;
-  }
-  return true;
-}
-
+// Submit event
 form.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -117,6 +126,7 @@ form.addEventListener('submit', (e) => {
   }
 });
 
+// Input each field event
 userId.addEventListener('input', () => {
   checkUserId(userId);
 });
@@ -133,6 +143,7 @@ password2.addEventListener('input', () => {
   checkPassword(password, password2);
 });
 
+// Click modal button event
 successBtn.addEventListener('click', () => {
   window.location.reload();
 });
