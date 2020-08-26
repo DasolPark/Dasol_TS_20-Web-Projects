@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>영화 티켓 구매 페이지</title>
+    <link rel="stylesheet" href="./css/movieSeatBooking.css" />
+  </head>
+  <body>
+    <div class="pick-movie">
+      <label for="movies">🎥 영화를 선택하세요</label>
+      <select id="movies">
+        <option value="15000">테넷 (TENET, 2020)</option>
+        <option value="12000">
+          다만 악에서 구하소서 (DELIVER US FROM EVIL, 2019)
+        </option>
+        <option value="10000">기생충 (PARASITE, 2019)</option>
+      </select>
+    </div>
+    <div class="seat-desc">
+      <div>
+        <div class="seat"></div>
+        <small>빈 좌석</small>
+      </div>
+      <div>
+        <div class="seat selected"></div>
+        <small>선택된 좌석</small>
+      </div>
+      <div>
+        <div class="seat occupied"></div>
+        <small>점유된 좌석</small>
+      </div>
+    </div>
+    <div class="seats" id="seats">
+      <div class="screen"></div>
+
+      <div class="seat-row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="seat-row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="seat-row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="seat-row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+      </div>
+      <div class="seat-row">
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat occupied"></div>
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+      <div class="seat-row">
+        <div class="seat occupied"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+        <div class="seat"></div>
+      </div>
+    </div>
+
+    <p class="result">
+      <span id="count">0</span>개의 좌석을 선택되었으며, 결제 금액은
+      <span id="total">0</span>원 입니다.
+    </p>
+
+    <script src="./dist/movieSeatBooking.js"></script>
+  </body>
+</html>
