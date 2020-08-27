@@ -129,3 +129,40 @@ select:focus {
 #total {
   color: var(--seat-color-selected);
 }
+
+.greeting {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: var(--background-color);
+  z-index: 10;
+  animation: greeting 1.5s ease-in-out;
+}
+
+.greeting h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes greeting {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  select {
+    font-size: 0.7rem;
+  }
+  .result {
+    font-size: 0.8rem;
+  }
+}

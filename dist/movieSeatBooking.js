@@ -12,7 +12,15 @@ var seats = document.querySelectorAll('.seats .seat:not(.occupied)');
 var count = document.getElementById('count');
 var total = document.getElementById('total');
 var ticketPrice = +movieSelect.value;
+greeting();
 populateUI();
+// Greeting
+function greeting() {
+    setTimeout(function () {
+        document.querySelector('.greeting').style.display =
+            'none';
+    }, 1500);
+}
 // Populate UI
 function populateUI() {
     var selectedSeatsIndex = JSON.parse(localStorage.getItem("movie" + movieSelect.selectedIndex) || '[]');
@@ -31,34 +39,38 @@ function populateUI() {
             return seat.classList.remove('selected');
         });
     }
-    updateSelectedSeat();
+    updateTotalPrice(selectedSeatsIndex.length);
 }
-// Update selected seat & Set LocalStorage & Count ticket & Calculate total price
+// Update count and total price
+function updateTotalPrice(selectedSeatsLength) {
+    count.innerText = selectedSeatsLength.toString();
+    total.innerText = formatNumber(selectedSeatsLength * ticketPrice);
+}
+function setLocalStorage(selectedSeatsIndex) {
+    localStorage.setItem("movie" + movieSelect.selectedIndex, JSON.stringify(selectedSeatsIndex));
+}
+// Update selected seat
 function updateSelectedSeat() {
     var selectedSeats = document.querySelectorAll('.seats .seat.selected');
     var selectedSeatsIndex = __spreadArrays(selectedSeats).map(function (seat) {
         return __spreadArrays(seats).indexOf(seat);
     });
-    localStorage.setItem("movie" + movieSelect.selectedIndex, JSON.stringify(selectedSeatsIndex));
-    var selectedSeatsLength = selectedSeatsIndex.length;
-    count.innerText = selectedSeatsLength.toString();
-    total.innerText = formatNumber(selectedSeatsLength * ticketPrice);
+    setLocalStorage(selectedSeatsIndex);
+    updateTotalPrice(selectedSeatsIndex.length);
 }
 // Event listeners
 movieSelect.addEventListener('change', function (e) {
     ticketPrice = +e.target.value;
     populateUI();
-    updateSelectedSeat();
 });
 seatsContainer.addEventListener('click', function (e) {
-    var targetDiv = e.target;
-    if (targetDiv.classList.contains('seat') &&
-        !targetDiv.classList.contains('occupied')) {
-        targetDiv.classList.toggle('selected');
+    var seat = e.target;
+    if (seat.classList.contains('seat') && !seat.classList.contains('occupied')) {
+        seat.classList.toggle('selected');
         updateSelectedSeat();
     }
 });
-// Util
+// Util for Number formatting
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
