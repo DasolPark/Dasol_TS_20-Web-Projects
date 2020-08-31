@@ -16,7 +16,7 @@ function greeting() {
   setTimeout(() => {
     (document.querySelector('.greeting') as HTMLDivElement).style.display =
       'none';
-  }, 1500);
+  }, 1400);
 }
 
 // Populate UI

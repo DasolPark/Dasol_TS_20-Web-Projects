@@ -19,7 +19,7 @@ function greeting() {
     setTimeout(function () {
         document.querySelector('.greeting').style.display =
             'none';
-    }, 1500);
+    }, 1400);
 }
 // Populate UI
 function populateUI() {
