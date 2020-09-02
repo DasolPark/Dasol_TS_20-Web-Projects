@@ -5,7 +5,7 @@
 |  01   |    Form Validator[회원가입 유효성 검사]     |  [x]  |
 |  02   |    Movie Seat Booking[영화관 티켓 구매]     |  [x]  |
 |  03   | Custom Video Player[나만의 비디오 플레이어] |  [x]  |
-|  04   |          Exchange Rate Calculator           |  [ ]  |
+|  04   |    Exchange Rate Calculator[환율 계산기]    |  [x]  |
 |  05   |          DOM Array Methods Project          |  [ ]  |
 |  06   |             Menu Slider & Modal             |  [ ]  |
 |  07   |                Hangman Game                 |  [ ]  |

@@ -59,8 +59,8 @@ function setLocalStorage(selectedSeatsIndex: number[]) {
 function updateSelectedSeat() {
   const selectedSeats = document.querySelectorAll('.seats .seat.selected');
 
-  const selectedSeatsIndex = [...selectedSeats].map((seat) =>
-    [...seats].indexOf(seat)
+  const selectedSeatsIndex = [...Array.from(selectedSeats)].map((seat) =>
+    [...Array.from(seats)].indexOf(seat)
   );
 
   setLocalStorage(selectedSeatsIndex);

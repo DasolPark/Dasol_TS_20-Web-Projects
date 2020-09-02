@@ -11,7 +11,6 @@ var openBtn = document.getElementById('open');
 var closeBtn = document.getElementById('close');
 var menuSlider = document.getElementById('menu-slider');
 video.volume = 0.5;
-// Play & pause video
 function toggleVideoStatus() {
     if (video.paused) {
         video.play();
@@ -20,7 +19,6 @@ function toggleVideoStatus() {
         video.pause();
     }
 }
-// Update play/pause icon
 function updatePlayIcon() {
     if (!video.paused) {
         playBtn.querySelector('.fa-play').className =
@@ -31,7 +29,6 @@ function updatePlayIcon() {
             'fa fa-play';
     }
 }
-// Stop video
 function stopVideo() {
     if (!video.paused) {
         video.pause();
@@ -41,17 +38,14 @@ function stopVideo() {
         video.currentTime = 0;
     }
 }
-// Update progressRange and timestamp
 function updateProgress() {
     var progressValue = (video.currentTime / video.duration) * 100;
     progressRange.value = progressValue.toString();
-    // timestamp를 뽑아낼 때, 증감량과 분리해서 로직 작성할 것(실수/정수)
     var hours = Math.floor(video.currentTime / 60 / 60);
     var mins = Math.floor((video.currentTime / 60) % 60);
     var secs = Math.floor(video.currentTime % 60);
     timestamp.innerHTML = "\n    " + (hours < 10 ? '0' + hours : hours) + ":" + (mins < 10 ? '0' + mins : mins) + ":" + (secs < 10 ? '0' + secs : secs) + "\n  ";
 }
-// Update video ended status
 function updateVideoEnded() {
     playBtn.querySelector('.fa-pause').className = 'fa fa-play';
     progressRange.value = '0';
@@ -59,7 +53,6 @@ function updateVideoEnded() {
 function setVideoProgress() {
     video.currentTime = (+progressRange.value * video.duration) / 100;
 }
-// Update volume range
 function updateVolumeValue(e) {
     var value = +e.target.value;
     video.volume = value;
@@ -90,7 +83,6 @@ function updateFullScreen() {
         video.requestFullscreen();
     }
 }
-// Event listeners
 playBtn.addEventListener('click', toggleVideoStatus);
 stopBtn.addEventListener('click', stopVideo);
 video.addEventListener('click', toggleVideoStatus);

@@ -13,7 +13,6 @@ var Field;
     Field["PASSWORD"] = "Password";
     Field["PASSWORD2"] = "Password2";
 })(Field || (Field = {}));
-// check  password validation
 function checkPassword(password, password2) {
     var value = password.value.trim();
     var value2 = password2.value.trim();
@@ -35,7 +34,6 @@ function checkPassword(password, password2) {
     }
     return false;
 }
-// Check email validation
 function checkEmail(email) {
     var value = email.value.trim();
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -51,7 +49,6 @@ function checkEmail(email) {
     }
     return false;
 }
-// Check user id validation
 function checkUserId(userId) {
     var value = userId.value.trim();
     var re = /^[a-z0-9]{5,12}$/;
@@ -67,7 +64,6 @@ function checkUserId(userId) {
     }
     return false;
 }
-// Translate English to Korean
 function getKrFieldName(enTitle) {
     if (enTitle === Field.USERID) {
         return '아이디';
@@ -82,18 +78,15 @@ function getKrFieldName(enTitle) {
         return '비밀번호 확인';
     }
 }
-// Get Korean field name from English field name
 function getFieldName(input) {
     return getKrFieldName(input.id.charAt(0).toUpperCase() + input.id.slice(1));
 }
-// Check field required
 function checkRequired(input) {
     if (input.value.trim() === '') {
         return false;
     }
     return true;
 }
-// Show error or success
 function showError(input, message) {
     var formControl = input.parentElement;
     formControl.className = 'form-control error';
@@ -104,7 +97,6 @@ function showSuccess(input) {
     var formControl = input.parentElement;
     formControl.className = 'form-control success';
 }
-// Submit event
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (checkUserId(userId) &&
@@ -113,7 +105,6 @@ form.addEventListener('submit', function (e) {
         modal.classList.add('show');
     }
 });
-// Input each field event
 userId.addEventListener('input', function () {
     checkUserId(userId);
 });
@@ -126,7 +117,6 @@ password.addEventListener('input', function () {
 password2.addEventListener('input', function () {
     checkPassword(password, password2);
 });
-// Click modal button event
 successBtn.addEventListener('click', function () {
     window.location.reload();
 });

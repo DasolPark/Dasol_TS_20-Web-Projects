@@ -14,14 +14,12 @@ var total = document.getElementById('total');
 var ticketPrice = +movieSelect.value;
 greeting();
 populateUI();
-// Greeting
 function greeting() {
     setTimeout(function () {
         document.querySelector('.greeting').style.display =
             'none';
     }, 1400);
 }
-// Populate UI
 function populateUI() {
     var selectedSeatsIndex = JSON.parse(localStorage.getItem("movie" + movieSelect.selectedIndex) || '[]');
     if (selectedSeatsIndex.length) {
@@ -41,7 +39,6 @@ function populateUI() {
     }
     updateTotalPrice(selectedSeatsIndex.length);
 }
-// Update count and total price
 function updateTotalPrice(selectedSeatsLength) {
     count.innerText = selectedSeatsLength.toString();
     total.innerText = formatNumber(selectedSeatsLength * ticketPrice);
@@ -49,16 +46,14 @@ function updateTotalPrice(selectedSeatsLength) {
 function setLocalStorage(selectedSeatsIndex) {
     localStorage.setItem("movie" + movieSelect.selectedIndex, JSON.stringify(selectedSeatsIndex));
 }
-// Update selected seat
 function updateSelectedSeat() {
     var selectedSeats = document.querySelectorAll('.seats .seat.selected');
-    var selectedSeatsIndex = __spreadArrays(selectedSeats).map(function (seat) {
-        return __spreadArrays(seats).indexOf(seat);
+    var selectedSeatsIndex = __spreadArrays(Array.from(selectedSeats)).map(function (seat) {
+        return __spreadArrays(Array.from(seats)).indexOf(seat);
     });
     setLocalStorage(selectedSeatsIndex);
     updateTotalPrice(selectedSeatsIndex.length);
 }
-// Event listeners
 movieSelect.addEventListener('change', function (e) {
     ticketPrice = +e.target.value;
     populateUI();
@@ -70,7 +65,6 @@ seatsContainer.addEventListener('click', function (e) {
         updateSelectedSeat();
     }
 });
-// Util for Number formatting
 function formatNumber(num) {
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 }
