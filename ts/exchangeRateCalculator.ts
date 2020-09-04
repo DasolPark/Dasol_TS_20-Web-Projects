@@ -13,28 +13,55 @@ const currencyRate = document.getElementById(
 
 const swapBtn = document.getElementById('swap') as HTMLButtonElement;
 
+interface objectKeyValue {
+  [index: string]: number;
+}
+
+let currencyData: {
+  base: string;
+  date: string;
+  rates: objectKeyValue;
+};
+let topCurrencyVal: string;
+let bottomCurrencyVal: string;
+
+// Set current selected currency
+function setCurrentCurrency() {
+  topCurrencyVal = topCurrency.value;
+  bottomCurrencyVal = bottomCurrency.value;
+}
+
+// Update entire currency UI
+function updateCurrencyUI() {
+  const rate: string = currencyData.rates[bottomCurrencyVal].toFixed(4);
+  currencyRate.innerText = `1 ${topCurrencyVal} = ${rate} ${bottomCurrencyVal}`;
+  bottomAmount.value = (+topAmount.value * +rate).toFixed(2);
+}
+
+// Fetch currency rate data
 async function getCurrencyRate() {
-  const topCurrencyVal: string = topCurrency.value;
-  const bottomCurrencyVal: string = bottomCurrency.value;
+  setCurrentCurrency();
 
   const endpoint: string = `https://api.exchangeratesapi.io/latest?base=${topCurrencyVal}`;
-  const data = await (await fetch(endpoint)).json();
-  // console.log(data);
+  currencyData = await (await fetch(endpoint)).json();
+  console.log(currencyData);
 
-  const rate: string = Number(data.rates[bottomCurrencyVal]).toFixed(4);
+  updateCurrencyUI();
+}
 
-  currencyRate.innerText = `1 ${topCurrencyVal} = ${rate} ${bottomCurrencyVal}`;
-
-  bottomAmount.value = (+topAmount.value * +rate).toFixed(2);
+// Calculate currency rate
+function calculateCurrencyRate() {
+  setCurrentCurrency();
+  updateCurrencyUI();
 }
 
 getCurrencyRate();
 
+// Event listeners
 topCurrency.addEventListener('change', getCurrencyRate);
-topAmount.addEventListener('input', getCurrencyRate);
-bottomCurrency.addEventListener('change', getCurrencyRate);
-bottomAmount.addEventListener('input', getCurrencyRate);
-
+topAmount.addEventListener('input', calculateCurrencyRate);
+bottomCurrency.addEventListener('change', calculateCurrencyRate);
+bottomAmount.addEventListener('input', calculateCurrencyRate);
 swapBtn.addEventListener('click', () => {
   const temp: string = topCurrency.value;
   topCurrency.value = bottomCurrency.value;

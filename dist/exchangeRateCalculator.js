@@ -41,32 +41,46 @@ var bottomCurrency = document.getElementById('bottom-select');
 var bottomAmount = document.getElementById('bottom-input');
 var currencyRate = document.getElementById('currency-desc');
 var swapBtn = document.getElementById('swap');
+var currencyData;
+var topCurrencyVal;
+var bottomCurrencyVal;
+function setCurrentCurrency() {
+    topCurrencyVal = topCurrency.value;
+    bottomCurrencyVal = bottomCurrency.value;
+}
+function updateCurrencyUI() {
+    var rate = currencyData.rates[bottomCurrencyVal].toFixed(4);
+    currencyRate.innerText = "1 " + topCurrencyVal + " = " + rate + " " + bottomCurrencyVal;
+    bottomAmount.value = (+topAmount.value * +rate).toFixed(2);
+}
 function getCurrencyRate() {
     return __awaiter(this, void 0, void 0, function () {
-        var topCurrencyVal, bottomCurrencyVal, endpoint, data, rate;
+        var endpoint;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    topCurrencyVal = topCurrency.value;
-                    bottomCurrencyVal = bottomCurrency.value;
+                    setCurrentCurrency();
                     endpoint = "https://api.exchangeratesapi.io/latest?base=" + topCurrencyVal;
                     return [4, fetch(endpoint)];
                 case 1: return [4, (_a.sent()).json()];
                 case 2:
-                    data = _a.sent();
-                    rate = Number(data.rates[bottomCurrencyVal]).toFixed(4);
-                    currencyRate.innerText = "1 " + topCurrencyVal + " = " + rate + " " + bottomCurrencyVal;
-                    bottomAmount.value = (+topAmount.value * +rate).toFixed(2);
+                    currencyData = _a.sent();
+                    console.log(currencyData);
+                    updateCurrencyUI();
                     return [2];
             }
         });
     });
 }
+function calculateCurrencyRate() {
+    setCurrentCurrency();
+    updateCurrencyUI();
+}
 getCurrencyRate();
 topCurrency.addEventListener('change', getCurrencyRate);
-topAmount.addEventListener('input', getCurrencyRate);
-bottomCurrency.addEventListener('change', getCurrencyRate);
-bottomAmount.addEventListener('input', getCurrencyRate);
+topAmount.addEventListener('input', calculateCurrencyRate);
+bottomCurrency.addEventListener('change', calculateCurrencyRate);
+bottomAmount.addEventListener('input', calculateCurrencyRate);
 swapBtn.addEventListener('click', function () {
     var temp = topCurrency.value;
     topCurrency.value = bottomCurrency.value;
