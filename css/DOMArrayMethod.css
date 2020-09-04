@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+
+:root {
+  --background-color: #f4f4f4;
+
+  --border-color: #dedede;
+
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+i {
+  all: unset;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  background-color: var(--background-color);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  margin: 50px auto;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  margin-right: 20px;
+  border-right: 1px solid #999;
+}
+
+button {
+  margin: 10px 0;
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+main h2 {
+  margin: 0 0 5px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #999;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+main h2 strong {
+  margin-right: 200px;
+}
+
+.person {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.person img {
+  border-radius: 50%;
+  margin-right: 5px;
+  box-shadow: var(--box-shadow);
+}
+
+.person strong {
+  margin-right: 30px;
+}
+
+.total {
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #999;
+}
